@@ -1,0 +1,38 @@
+name: my_pdf_pipeline_proyect
+
+# Exam GH-200: Here the "Trigger" is defined
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  # Job 1
+  test-python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone code
+        uses: actions/checkout@v4
+
+      - name: Simulate tests for Python
+        run: echo "Running linters and script de PDF tests..."
+
+  # Job 2
+  validate-infra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone code
+        uses: actions/checkout@v4
+
+      - name: Simulate tests for Terraform
+        run: echo "Validating Terraform files..."
+
+  # Job 3
+  build-docker:
+    runs-on: ubuntu-latest
+    needs: [test-python, validate-infra] # Exam GH-200: This forces the sequential order
+    steps:
+      - name: Clone code
+        uses: actions/checkout@v4
+
+      - name: Simulate Docker build
+        run: echo "Both previous jobs passed successfully. Building Docker image..."
