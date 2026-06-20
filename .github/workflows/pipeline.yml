@@ -44,5 +44,15 @@ jobs:
       - name: Clone code
         uses: actions/checkout@v7
 
-      - name: Simulate Docker build
-        run: echo "Both previous jobs passed successfully. Building Docker image..."
+      # Exam GH-200: set Buildx, docker modern engine for building images
+      - name: Set Docker Buildx
+        uses: docker/setup-buildx-action@v4.1.0
+
+      # Exam GH-200: build the image using a action from the marketplace
+      - name: Build docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false # We are not pushing to a registry, just building locally
+          tags: mi-proyecto-pdf:latest
