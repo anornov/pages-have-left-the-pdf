@@ -40,6 +40,9 @@ jobs:
   build-docker:
     runs-on: ubuntu-latest
     needs: [test-python, validate-infra] # Exam GH-200: This forces the sequential order
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Clone code
         uses: actions/checkout@v7
