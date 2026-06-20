@@ -37,7 +37,7 @@ def delete_pdf_pages(input_pdf, output_pdf, individual_pages, ranges):
 print("--- Fill in the following form ---\n")
 
 prompt1 = (
-    "1. Name of the original PDF file (e.g., entry.pdf)"
+    "1. Name of the original PDF file (e.g., entry.pdf): "
 )
 source_file = input(prompt1).strip()
 
