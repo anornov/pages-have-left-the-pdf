@@ -11,17 +11,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - name: Simulate tests for Python
-        run: echo "Running linters and script de PDF tests..."
+      - name: Set the Python environment
+        uses: actions/setup-python@v5 #Take a look at the latest version of this action in the marketplace
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+
+      - name: Run linters (Flake8)
+        run: flake8 main.py
 
   # Job 2
   validate-infra:
     runs-on: ubuntu-latest
     steps:
       - name: Clone code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Simulate tests for Terraform
         run: echo "Validating Terraform files..."
@@ -32,7 +42,7 @@ jobs:
     needs: [test-python, validate-infra] # Exam GH-200: This forces the sequential order
     steps:
       - name: Clone code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Simulate Docker build
         run: echo "Both previous jobs passed successfully. Building Docker image..."
